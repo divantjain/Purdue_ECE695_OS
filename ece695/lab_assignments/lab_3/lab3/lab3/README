@@ -1,0 +1,84 @@
+ECE 695 - Introduction to Operating Systems - Fall 2021
+-------------------------------------------------------
+
+--------------------------------------------
+Programming Assignment 	: 3
+Date			: 31 October 2021
+Student's Name		: Divant Jain, Joe Eappen
+Student's PUID		: 0033674187, 0030923393
+--------------------------------------------
+
+
+IMPORTANT (Please Read this)
+--------------------------------------------
+Work Contribution by Lab Partners: 
+
+Q1: Done by Divant and Joe
+Q2: Done by Divant and Joe
+Q3: Done by Divant and Joe
+Q4: 100% Done by Divant Jain
+Q5: 100% Done by Divant Jain
+--------------------------------------------
+
+
+Steps to BUILD the solution:
+----------------------------
+NOTE: Commands to run individual Testcases is given in README for each directory:
+1. one-level/README 
+2. two-level/README 
+3. heap-mgmt/README 
+
+General Steps to Run Hello World:
+---------------------------------
+1. cd lab3
+
+2. cd one-level
+2. mainframer.sh 'cd os && make'
+3. mainframer.sh 'cd apps && make'
+4. cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+5. mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+2. cd two-level
+2. mainframer.sh 'cd os && make'
+3. mainframer.sh 'cd apps && make'
+4. cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+5. mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+2. cd heap-mgmt
+2. mainframer.sh 'cd os && make'
+3. mainframer.sh 'cd apps && make'
+4. cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+5. mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+
+Files Modified for each question:
+---------------------------------
+Q1, Q3, Q5:
+----------- 
+include/os/memory.h
+os/memory.c
+include/os/memory_constants.h 	
+include/os/process.h 	
+os/process.c
+
+Q2, Q5:
+-------
+apps/example/makeprocs/makeprocs.c 
+apps/example/hello_world/hello_world.c 
+apps/example/test_prog_1/test_prog_1.c 
+apps/example/test_prog_2/test_prog_2.c 
+apps/example/test_prog_3/test_prog_3.c 
+apps/example/test_prog_4/test_prog_4.c 
+apps/example/test_prog_5/test_prog_5.c
+
+
+Anything Unusual about about my solution:
+-----------------------------------------
+1. Arguement to makeprocs.c
+   <Type of process> <No. of Process>
+
+
+Any external sources referenced while working of the solution:
+--------------------------------------------------------------
+1. NONE
+

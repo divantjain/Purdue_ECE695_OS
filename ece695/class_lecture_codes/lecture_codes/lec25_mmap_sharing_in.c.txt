@@ -1,0 +1,39 @@
+/*
+An example showing using mmap() to share memory between two processes
+*/
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h> /* mmap() is defined in this header */
+#include <fcntl.h>
+#include <unistd.h>
+
+#define SIZE 512000000
+
+int main (int argc, char *argv[])
+{
+  int fdin, fdout, i;
+  int *src, *dst;
+  struct stat statbuf;
+
+  if (argc != 2) { perror("usage: a.out <backing file>"); exit(1);}
+
+  /* open the input file */
+  if ((fdin = open (argv[1], O_RDONLY)) < 0)
+    perror ("can't open %s for reading", argv[1]);
+
+  /* mmap the input file */
+  if ((src = mmap (0, SIZE, PROT_READ, MAP_SHARED, fdin, 0))
+      == (int *) -1)
+    perror ("mmap error for input");
+
+  if (fdin != -1) close(fdin);
+
+  sleep(2);
+  /* read the stuff out like memory reference! */
+  for (i=0; i<(SIZE >> 18); i++){
+    printf("direct memory read: scr[%d] = %d\n", (i<<16), *(src+(i<<16)) );
+  }
+ 
+ exit(0);
+} 

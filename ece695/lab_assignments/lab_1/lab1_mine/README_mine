@@ -1,0 +1,33 @@
+ECE 695 - Introduction to Operating Systems
+--------------------------------------------
+
+--------------------------------------------
+Programming Assignment 	: 1
+Date			: 29 August 2021
+Student's Name		: Divant Jain
+Student's PUID		: 0033674187
+--------------------------------------------
+
+Steps to BUILD the solution:
+----------------------------
+1. cd lab1
+2. mainframer.sh 'cd os && make'
+3. mainframer.sh 'cd apps && make'
+4. dlxsim -x ~/ece695/lab1/os/work/os.dlx.obj -a -u ~/ece695/lab1/apps/work/userprog.dlx.obj -D k
+
+Anything Unusual about about my solution:
+-----------------------------------------
+1. I have calculated Current Process ID by comparing the PCB structure elements of the "currentPCB" and the "pcbs[PROCESS_MAX_PROCS]"
+2. The one that matched, I have noted the index of the "pcbs", and given it as the Current Process ID
+
+Any external sources referenced while working of the solution:
+--------------------------------------------------------------
+1. NONE
+
+
+
+
+My Personal Notes:
+------------------
+1. Following is the hierarchy of the files:
+   apps/userprog.c -> include/usertraps.h -> os/usertraps.s -> include/os/traps.h -> os/traps.c -> include/os/process.h -> os/process.c

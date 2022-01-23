@@ -1,0 +1,12 @@
+gvim include/spawn.h krypton/krypton.c nitrogen/nitrogen.c oxygen/oxygen.c no2/no2.c ozone/ozone.c -o
+
+cd ~/ece695/ece695_intro2os/lab2/bin
+
+cd ../ mainframer.sh "cd os && make" && mainframer.sh "cd apps/q5 && make" && cd bin && dlxsim -x os.dlx.obj -a -u krypton.dlx.obj 12 90 59
+
+cd ../ mainframer.sh "cd os && make" && mainframer.sh "cd apps/q5 && make" && cd bin && dlxsim -x os.dlx.obj -a -u krypton.dlx.obj 12 90 60
+
+cd ../ mainframer.sh "cd os && make" && mainframer.sh "cd apps/q5 && make" && cd bin && dlxsim -x os.dlx.obj -a -u krypton.dlx.obj 12 90 120
+
+cd ../ mainframer.sh "cd os && make" && mainframer.sh "cd apps/q5 && make" && cd bin && dlxsim -x os.dlx.obj -a -u krypton.dlx.obj 12 90 121
+

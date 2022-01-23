@@ -1,0 +1,58 @@
+; Compiled by GCC
+.data
+	.align 2
+LC0:
+	.ascii "Hello World!\n\000"
+	.align 2
+LC1:
+	.ascii "Got the process id of Current Process\n\000"
+	.align 2
+LC2:
+	.ascii "The pid is %u.\n\000"
+	.align 2
+LC3:
+	.ascii "Program Finished! You can press CTRL-C to exit the simulator\n\000"
+.text
+	.align 2
+.proc _main
+.global _main
+_main:
+;  Function 'main'; 0 bytes of locals, 0 regs to save.
+	sw	-4(r29),r30	; push fp
+	add	r30,r0,r29	; fp = sp
+	sw	-8(r29),r31	; push ret addr
+	subui	r29,r29,#8	; alloc local storage
+	jal	___main
+	nop	; not filled.
+	addi	r29,r29,#-8
+	lhi	r3,((LC0)>>16)&0xffff
+	addui	r3,r3,(LC0)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop	; not filled.
+	jal	_Getpid
+	nop	; not filled.
+	add	r2,r0,r1
+	lhi	r3,((LC1)>>16)&0xffff
+	addui	r3,r3,(LC1)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop	; not filled.
+	lhi	r3,((LC2)>>16)&0xffff
+	addui	r3,r3,(LC2)&0xffff
+	sw	(r29),r3
+	sw	4(r29),r2
+	jal	_Printf
+	nop	; not filled.
+	lhi	r3,((LC3)>>16)&0xffff
+	addui	r3,r3,(LC3)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop	; not filled.
+	addi	r29,r29,#8
+L7:
+	j	L7
+	nop	; not filled.
+	jal	_exit
+	nop
+.endproc _main

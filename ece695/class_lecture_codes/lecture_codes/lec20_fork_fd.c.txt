@@ -1,0 +1,40 @@
+/*
+ A simple exampel showing how fd is shared after fork()
+*/
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+main()
+{
+  char string[11]="0123456789";
+  char string2[15]="--by child---";
+  char string3[15]="--byParent---";
+  int fd1, fd2, fd3, pid, i, j;
+
+//  pid = fork();
+
+  if ((fd1 = open ("foo", O_RDONLY|O_WRONLY)) < 0)
+    perror ("1st time: can't open %s for reading/writing", "foo");
+  write(fd1, string, 10);
+  printf("before fork(), write fd %d\n", fd1);
+
+pid=fork();
+
+  if (pid < 0) {printf("Fork failed\n"); exit(1); }
+  else if (pid == 0) {
+    sleep(3);
+    write(fd1, string2, 12);
+    close(fd1);
+    printf("\nChild process: pid=%d wrote fd %d \n", pid, fd1);
+    exit(0);
+  } else {
+    sleep(1);
+    write(fd1, string3, 12);
+    close(fd1);
+    printf("Parent process: wrote fd %d \n", pid, fd1);
+    exit(0);
+  }
+}

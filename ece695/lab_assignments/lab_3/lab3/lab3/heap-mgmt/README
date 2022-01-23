@@ -1,0 +1,27 @@
+Build:
+------
+mainframer.sh 'cd os && make'
+mainframer.sh 'cd apps/example && make'
+cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+Make Clean:
+-----------
+cd os && make clean && cd ..
+cd apps/example && make clean && cd .. && cd ..
+
+Running Testcases:
+------------------
+
+test_prog 1 : Hello World
+-------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+test_prog 2 : Test Program Given in Lab Manual
+----------------------------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 1 1 && cd ..
+
+test_prog 3 : My program to debug Order 0 Nodes Allocation and Freeing
+----------------------------------------------------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 2 1 && cd ..
+

@@ -1,0 +1,3 @@
+Command to Run:
+1. gcc <filename.c>
+2. a.out <command line arguements - OPTIONAL>

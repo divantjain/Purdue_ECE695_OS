@@ -1,0 +1,44 @@
+1. 32 semaphore and 64 locks are available.
+
+2. lab2-api.h houses the declarations for functions 
+    lock_t lock_create();			//trap 0x452 Calls LockCreate()
+    int lock_acquire(lock_t lock);		//trap 0x453 Calls LockHandleAcquire()
+    int lock_release(lock_t lock);		//trap 0x454 Calls LockHandleRelease()
+    These system calls run routines from synch.h via the Trap Handler.
+
+3. 
+    - Disable interrupts before checking the array of semaphores for an unused semaphore.
+    - Restore interrupts and check if all semaphore handles are used (return SYNC_FAIL)
+    - If a usable semaphore is present, semInit() attempts to set the count and make the process waiting queue for that semaphore.
+    - Finally, return the semaphore handle.
+
+4. 
+    lock_acquire:
+        - Uses lock handle and check for valid handle, check if lock handle initialized (created),
+        - Disable interrupts, check if already lock is owned and return SYNC_SUCCESS. 
+        - Otherwise,
+            if lock available, assign lock->PID to current process
+            else put process to sleep in the lock waiting queue.
+        - Restore interrupts, return
+    lock_release:
+        - Uses lock handle and check for valid handle, check if lock handle initialized (created),
+        - Disable interrupts, check if already lock is not owned by current process exit with SYNC_FAIL. 
+        - Release lock
+            if waiting queue is non-empty, transfer lock and wakeup process from the lock waiting queue.
+        - Restore interrupts, return
+    sem_signal:
+        - Uses sem handle and check for valid handle, check if sem handle initialized (created),
+        - Disable interrupts, increment count, 
+        - if waiting queue is non-empty,  wakeup process from the sem waiting queue, decrement count.
+        - Restore interrupts, return
+    sem_wait:
+        - Uses sem handle and check for valid handle, check if sem handle initialized (created),
+        - Disable interrupts, 
+            if count <= 0,  put current process to sleep. 
+            else decrement count.
+        - Restore interrupts, return
+
+5. Handle is an unsigned integer indexing a particular semaphore in the array of semaphore structures sems[].
+    When a semaphore is created it sets to a non-negative integer between 1 and MAX_SEMS (32).
+    The sem_wait() and sem_signal() functions use the handle to access the semaphore properties and check for
+    the validity of the passed semaphore, i.e. whether it was initialized properly.

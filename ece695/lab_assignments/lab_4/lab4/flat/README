@@ -1,0 +1,129 @@
+ECE 695 - Introduction to Operating Systems - Fall 2021
+-------------------------------------------------------
+
+--------------------------------------------
+Programming Assignment 	: 4
+Date			: 21 November 2021
+Student's Name		: Divant Jain
+Student's PUID		: 0033674187
+--------------------------------------------
+
+
+----------------------------
+Steps to BUILD the solution:
+----------------------------
+1. cd lab4/flat
+
+2. mainframer.sh 'cd os && make'
+
+3. mainframer.sh 'cd apps/fdisk && make'
+4. mainframer.sh 'cd apps/ostests && make'
+5. mainframer.sh 'cd apps/file_api && make'
+
+7. cd bin && dlxsim -x os.dlx.obj -a -D d -u fdisk.dlx.obj && cd ..
+6. cd bin && dlxsim -x os.dlx.obj -a -D d -u ostests.dlx.obj && cd ..
+8. cd bin && dlxsim -x os.dlx.obj -a -D d -u file_api.dlx.obj && cd ..
+
+
+----------------
+Useful Commands:
+----------------
+make CLEAN:
+-----------
+cd os && make clean && cd ..
+cd apps/fdisk && make clean && cd .. && cd ..
+cd apps/ostests && make clean && cd .. && cd ..
+cd apps/file_api && make clean && cd .. && cd ..
+
+Q1:
+---
+mainframer.sh 'cd apps/fdisk && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D b -u fdisk.dlx.obj && cd ..
+
+./scripts/blockprint 1 /tmp/ece695jain490.img
+./scripts/blockprint 2 /tmp/ece695jain490.img
+./scripts/blockprint 34 /tmp/ece695jain490.img
+
+Q2, Q3, Q4:
+-----------
+mainframer.sh 'cd apps/ostests && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D b -u ostests.dlx.obj && cd ..
+
+./scripts/blockprint 1 /tmp/ece695jain490.img
+./scripts/blockprint 2 /tmp/ece695jain490.img
+./scripts/blockprint 34 /tmp/ece695jain490.img
+./scripts/blockprint 50 51 /tmp/ece695jain490.img
+./scripts/blockprint 76 77 /tmp/ece695jain490.img
+./scripts/blockprint 594 595 /tmp/ece695jain490.img
+
+Q5, Q6:
+-------
+mainframer.sh 'cd apps/file_api && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D b -u file_api.dlx.obj && cd ..
+
+./scripts/blockprint 1 /tmp/ece695jain490.img
+./scripts/blockprint 2 /tmp/ece695jain490.img
+./scripts/blockprint 34 /tmp/ece695jain490.img
+./scripts/blockprint 50 51 /tmp/ece695jain490.img
+
+
+---------------------------------
+Files Modified for each question:
+---------------------------------
+Q1:
+---
+apps/fdisk/include/fdisk.h 
+apps/fdisk/fdisk/fdisk.c
+
+Q2:
+---
+include/dfs_shared.h
+os/dfs.c
+
+Q3:
+---
+include/dfs_shared.h
+os/dfs.c
+
+Q4:
+---
+os/ostests.c
+
+Q5:
+---
+include/files_shared.h
+os/files.c
+
+Q6:
+---
+apps/file_api (New Directory)
+apps/file_api/include/file_api.h 
+apps/file_api/file_api/file_api.c
+
+Q7:
+---
+include/dfs_shared.h
+os/dfs.c
+
+
+-----------------------------------------
+Anything Unusual about about my solution:
+-----------------------------------------
+1. debug printf argument for Buffer Cache is "b", for all the other DFS/INODE/File Operation its "d"
+2. I have submitted the lab twice, latest version is submitted on 21 November 2021 at 3:08 PM
+
+--------------------------------------------------------------
+Any external sources referenced while working of the solution:
+--------------------------------------------------------------
+1. NONE
+
+
+-----------------------------------------------
+Commands for Opeing the relevant files in gvim:
+-----------------------------------------------
+gvim include/usertraps.h apps/fdisk/include/fdisk.h apps/fdisk/fdisk/fdisk.c -O
+gvim include/usertraps.h apps/file_api/include/file_api.h apps/file_api/file_api/file_api.c -O
+
+gvim os/ostests.c include/dfs_shared.h os/dfs.c include/files_shared.h os/files.c -O
+gvim os/ostests.c include/dfs_shared.h include/os/dfs.h os/dfs.c include/files_shared.h include/os/files.h os/files.c -O
+
+gvim include/os/filesys.h os/filesys.c include/os/disk.h os/disk.c include/os/memory.h os/memory.c include/os/process.h os/process.c -O
+gvim os/ostests.c include/dfs_shared.h include/os/dfs.h os/dfs.c include/files_shared.h include/os/files.h os/files.c include/os/filesys.h os/filesys.c include/os/disk.h os/disk.c include/os/memory.h os/memory.c include/os/process.h os/process.c -O
+

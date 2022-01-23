@@ -1,0 +1,39 @@
+Build:
+------
+mainframer.sh 'cd os && make'
+mainframer.sh 'cd apps/example && make'
+cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+Make Clean:
+-----------
+cd os && make clean && cd ..
+cd apps/example && make clean && cd .. && cd ..
+
+Running Testcases:
+------------------
+
+test_prog 1 : Hello World
+-------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 0 1 && cd ..
+
+test_prog 2 : Access Beyond Virtual Address Space
+-------------------------------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 1 1 && cd ..
+
+test_prog 3 : Access Beyond Allocated Pages
+-------------------------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 2 1 && cd ..
+
+test_prog 4 : Stack Overflow
+----------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 3 1 && cd ..
+
+test_prog 5 : 100 Processes
+---------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -D m -u makeprocs.dlx.obj 4 100 && cd ..
+
+test_prog 6 : 30 Simultaneous Processes
+---------------------------------------
+mainframer.sh 'cd apps/example && make' && mainframer.sh 'cd os && make' && cd bin && dlxsim -x os.dlx.obj -a -u makeprocs.dlx.obj 5 30 && cd ..
+

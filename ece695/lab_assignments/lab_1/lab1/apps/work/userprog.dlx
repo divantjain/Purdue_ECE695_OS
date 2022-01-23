@@ -1,0 +1,168 @@
+; Linked by DLX-LD.
+; MemSize 20480
+; Data size: 134
+; Text size: 248
+; Stack size: 8192
+.text 0x1000
+.data 0x2000
+; Compiled by GCC
+
+.align 2
+LC0_LF0:
+.ascii "Hello World!\n\000"
+.align 2
+LC1_LF0:
+.ascii "Got the process id of Current Process\n\000"
+.align 2
+LC2_LF0:
+.ascii "The pid is %u.\n\000"
+.align 2
+LC3_LF0:
+.ascii "Program Finished! You can press CTRL-C to exit the simulator\n\000"
+.text
+.align 2
+.proc _main
+.global _main
+_main:
+;  Function 'main'; 0 bytes of locals, 0 regs to save.
+	sw	-4(r29),r30; push fp
+	add	r30,r0,r29; fp = sp
+	sw	-8(r29),r31; push ret addr
+	subui	r29,r29,#8; alloc local storage
+	jal	___main
+	nop; not filled.
+	addi	r29,r29,#-8
+	lhi	r3,((LC0_LF0)>>16)&0xffff
+	addui	r3,r3,(LC0_LF0)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop; not filled.
+	jal	_Getpid
+	nop; not filled.
+	add	r2,r0,r1
+	lhi	r3,((LC1_LF0)>>16)&0xffff
+	addui	r3,r3,(LC1_LF0)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop; not filled.
+	lhi	r3,((LC2_LF0)>>16)&0xffff
+	addui	r3,r3,(LC2_LF0)&0xffff
+	sw	(r29),r3
+	sw	4(r29),r2
+	jal	_Printf
+	nop; not filled.
+	lhi	r3,((LC3_LF0)>>16)&0xffff
+	addui	r3,r3,(LC3_LF0)&0xffff
+	sw	(r29),r3
+	jal	_Printf
+	nop; not filled.
+	addi	r29,r29,#8
+L7_LF0:
+	j	L7_LF0
+	nop; not filled.
+	jal	_exit
+	nop
+.endproc _main
+;;;
+;;; Stub functions for DLX traps.
+;;;
+;;; Ethan L. Miller, 1999.  Released to the public domain.
+;;;
+;;; The traps such as Open and Close
+;;; (note the capital letters) are for use by user programs.  The traps
+;;; with names such as open and close (lower case) are for use by the OS.
+;;;
+
+
+.align 2
+
+;;; The following are the traps to be used by user-level programs
+;;;
+
+.align 2
+.proc _Open
+.global _Open
+_Open:
+;;; Note that trap #0x213 actually causes a trap vector in the OS of
+;;; 0x1213.  The same is true for other user traps.  Thus, a user trap
+;;; with trap #0x240 will result in a trap vector of 0x1240 in the OS.
+	trap	#0x213
+	jr	r31
+	nop
+.endproc _Open
+
+.proc _Close
+.global _Close
+_Close:
+	trap	#0x214
+	jr	r31
+	nop
+.endproc _Close
+
+.proc _Read
+.global _Read
+_Read:
+	trap	#0x210
+	jr	r31
+	nop
+.endproc _Read
+
+.proc _Write
+.global _Write
+_Write:
+	trap	#0x211
+	jr	r31
+	nop
+.endproc _Write
+
+.proc _Lseek
+.global _Lseek
+_Lseek:
+	trap	#0x212
+	jr	r31
+	nop
+.endproc _Lseek
+
+.proc _Printf
+.global _Printf
+_Printf:
+	trap	#0x201
+	jr	r31
+	nop
+.endproc _Printf
+
+.proc _Getpid
+.global _Getpid
+_Getpid:
+	trap	#0x431
+	jr	r31
+	nop
+.endproc _Getpid
+;;; Ethan L. Miller, 1999.  Released to the public domain
+;;;
+;;; Most of the traps are called in files from libtraps.
+
+
+.align 2
+.proc _exit
+.global _exit
+_exit:
+	trap	#0x300
+	jr	r31
+	nop
+.endproc _exit
+
+; for the benefit of gcc.
+.proc ___main
+.global ___main
+___main:
+	jr	r31
+	nop
+.endproc ___main
+.text
+.global _etext
+_etext:
+.align 3
+.data
+.global _edata
+_edata:
